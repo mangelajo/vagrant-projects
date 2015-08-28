@@ -1,0 +1,54 @@
+---
+- hosts: all
+  tasks:
+    - name: enable epel repo
+      yum: name=http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
+      become: yes
+
+    - name: enable rdopkg repo
+      get_url: url=https://copr.fedoraproject.org/coprs/jruzicka/rdopkg/repo/epel-7/jruzicka-rdopkg-epel-7.repo dest=/etc/yum.repos.d/jruzicka-rdopkg-epel-7.repo
+      become: yes
+
+    - name: upgrade all packages
+      yum: name=* state=latest
+      become: yes
+
+    - name: install dependencies needed by delorean
+      yum: name=docker-io,createrepo,selinux-policy,rdopkg state=latest
+      become: yes
+
+    - name: install packages needed for delorean virtualenv build
+      yum: name=git,python-virtualenv,gcc state=latest
+      become: yes
+
+    - name: fetch delorean
+      git: repo=https://github.com/openstack-packages/delorean.git dest=~/delorean
+
+    - name: ensure docker group
+      group: name=docker state=present
+      become: yes
+
+    - name: add current user to docker group
+      user: name=vagrant groups=docker append=yes
+      become: yes
+
+    - name: fix selinux context for delorean scripts
+      shell: chcon -t docker_exec_t ~/delorean/scripts/*
+
+    - name: start docker
+      service: name=docker state=started
+      become: yes
+
+    - name: build base docker image for delorean
+      command: su -l vagrant ./delorean/scripts/create_build_image.sh
+      become: yes
+
+    - name: install delorean venv
+      shell: virtualenv delorean-venv && . delorean-venv/bin/activate && cd delorean && python setup.py develop
+
+    - name: set .bashrc to enter virtualenv on login
+      lineinfile: dest=~/.bashrc line="{{ item.line }}" insertafter=EOF create=True
+      with_items:
+        - { line: "alias delorean='delorean --config-file projects.ini --local --dev --package-name'" }
+        - { line: 'cd delorean' }
+        - { line: '. ../delorean-venv/bin/activate' }
