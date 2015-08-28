@@ -1,0 +1,18 @@
+---
+- hosts: all
+
+  roles:
+    - centos
+    - dev
+
+  tasks:
+    - name: fetch devstack
+      git: repo=https://git.openstack.org/openstack-dev/devstack dest=~/devstack
+
+    - name: configure local.conf
+      copy: src=local.conf dest=~/devstack/local.conf
+
+    - name: stack.sh
+      command: ./stack.sh
+      args:
+        chdir: ~/devstack
