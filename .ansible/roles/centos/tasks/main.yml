@@ -1,0 +1,10 @@
+---
+# Prepare base centos system
+
+- name: enable epel repo
+  yum: name=http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
+  become: yes
+
+- name: upgrade all packages
+  yum: name=* state=latest
+  become: yes
