@@ -2,5 +2,5 @@
 # Install misc python development tools
 
 - name: install misc python development tools
-  yum: name=python-virtualenv,python-tox state=latest
+  yum: name=python-tox state=latest
   become: yes
