@@ -2,5 +2,5 @@
 # Install misc development tools
 
 - name: install misc development tools
-  yum: name=git,tig,vim state=latest
+  yum: name=git,tig,vim,tmux state=latest
   become: yes
