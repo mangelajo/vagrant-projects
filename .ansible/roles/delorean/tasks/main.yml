@@ -21,10 +21,3 @@
 
 - name: install delorean venv
   shell: virtualenv delorean-venv && . delorean-venv/bin/activate && cd delorean && python setup.py develop
-
-- name: set .bashrc to enter virtualenv on login
-  lineinfile: dest=~/.bashrc line="{{ item.line }}" insertafter=EOF create=True
-  with_items:
-    - { line: "alias delorean='delorean --config-file projects.ini --local --dev --package-name'" }
-    - { line: 'cd delorean' }
-    - { line: '. ../delorean-venv/bin/activate' }

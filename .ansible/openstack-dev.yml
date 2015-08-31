@@ -5,6 +5,9 @@
     - centos
     - dev
     - python-dev
+    - docker
+    - delorean
+    - rdopkg
 
   tasks:
     - name: fetch neutron repos
