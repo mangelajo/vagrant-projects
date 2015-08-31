@@ -5,6 +5,6 @@
   get_url: url=https://copr.fedoraproject.org/coprs/jruzicka/rdopkg/repo/epel-7/jruzicka-rdopkg-epel-7.repo dest=/etc/yum.repos.d/jruzicka-rdopkg-epel-7.repo
   become: yes
 
-- name: install rdopkg
-  yum: name=rdopkg state=latest
+- name: install packages
+  yum: name=rdopkg,fedora-packager state=latest
   become: yes
