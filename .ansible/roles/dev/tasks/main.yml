@@ -4,3 +4,9 @@
 - name: install misc development tools
   yum: name=git,tig,vim,tmux,git-review state=latest
   become: yes
+
+- name: initialize custom configuration files
+  git: repo=https://github.com/booxter/configs.git dest=/home/homedir
+  become: yes
+  notify:
+    - install homedir
