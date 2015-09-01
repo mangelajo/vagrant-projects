@@ -2,7 +2,11 @@
 # Install misc development tools
 
 - name: install misc development tools
-  yum: name=git,tig,vim,tmux,git-review state=latest
+  yum: name=git,tig,vim,tmux,git-review,python-bugzilla state=latest
+  become: yes
+
+- name: install pastebinit from koji since it's not available from EPEL
+  yum: name=https://kojipkgs.fedoraproject.org//packages/pastebinit/1.3.1/5.fc23/noarch/pastebinit-1.3.1-5.fc23.noarch.rpm
   become: yes
 
 - name: initialize custom configuration files
