@@ -2,7 +2,7 @@
 # Install misc development tools
 
 - name: install misc development tools
-  yum: name=git,tig,vim,tmux,git-review,python-bugzilla state=latest
+  yum: name=git,tig,vim,tmux,git-review,python-bugzilla,ctags state=latest
   become: yes
 
 - name: install pastebinit from koji since it's not available from EPEL
