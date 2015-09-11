@@ -1,8 +1,12 @@
 ---
 # Prepare base centos system
 
-- name: enable epel repo
+- name: install epel repo
   yum: name=http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm state=present
+  become: yes
+
+- name: enable epel repo
+  command: yum-config-manager --enable epel
   become: yes
 
 - name: upgrade all packages
