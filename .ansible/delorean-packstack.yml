@@ -1,0 +1,21 @@
+---
+- hosts: all
+
+  roles:
+    - centos
+    - dev
+
+  tasks:
+    - name: enable RDO kilo repo
+      yum: name=https://repos.fedorapeople.org/repos/openstack/openstack-kilo/rdo-release-kilo-1.noarch.rpm state=latest
+      become: yes
+
+    - name: enable current delorean repo
+      get_url: url=http://trunk.rdoproject.org/centos7/current/delorean.repo dest=/etc/yum.repos.d/delorean.repo
+      become: yes
+
+    - name: install packstack
+      yum: name=openstack-packstack state=latest
+      become: yes
+
+# TODO: actually install openstack with packstack
