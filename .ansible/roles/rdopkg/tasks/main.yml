@@ -6,5 +6,5 @@
   become: yes
 
 - name: install packages
-  yum: name=rdopkg,fedora-packager state=latest
+  yum: name=rdopkg,fedora-packager,dnf,dnf-plugins-core state=latest
   become: yes
