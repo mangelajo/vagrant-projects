@@ -7,7 +7,7 @@
 
   tasks:
     - name: enable RDO kilo repo
-      yum: name=https://repos.fedorapeople.org/repos/openstack/openstack-kilo/rdo-release-kilo-1.noarch.rpm state=latest
+      yum: name=https://repos.fedorapeople.org/repos/openstack/openstack-kilo/rdo-release-kilo-1.noarch.rpm
       become: yes
 
     - name: enable current delorean repo
